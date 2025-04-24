@@ -37,13 +37,28 @@ public class BookMstService {
             bookMstDto.setId(book.getId());
             bookMstDto.setIsbn(book.getIsbn());
             bookMstDto.setTitle(book.getTitle());
-            bookMstDtoList.add(bookMstDto);
+            assert bookMstDtoList.add(bookMstDto);
         }
 
         return bookMstDtoList;
     }
-    
+    public void save(BookMstDto dto) {
+        BookMst entity = new BookMst();
+        entity.setIsbn(dto.getIsbn());
+        entity.setTitle(dto.getTitle());
+        bookMstRepository.save(entity);
+    }
+    public String selectIsbn(String id) {
+        Optional<BookMst> bookMstOptional = bookMstRepository.selectByIsbn(Long.parseLong(id));
+        if (bookMstOptional.isPresent()) {
+            return bookMstOptional.get().getIsbn();
+        } else {
+            return null;
+        }
+    }
+
 }
+
 
 
 
